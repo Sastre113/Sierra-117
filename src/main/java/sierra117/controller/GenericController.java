@@ -20,5 +20,4 @@ public class GenericController {
 	public <T> ResponseEntity<T> getTable(@PathVariable String nameTable){
 		return null;
 	}
-	
 }
