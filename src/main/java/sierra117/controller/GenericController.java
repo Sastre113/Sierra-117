@@ -20,16 +20,16 @@ public class GenericController {
 
 	@GetMapping(path = "/generic/{nameTable}")
 	public <T> ResponseEntity<String> getTable(@PathVariable String nameTable){
-		return ResponseEntity.ok("Tabla " + nameTable + " obtenida!");
+		return ResponseEntity.ok("Http Get: " + nameTable + " obtenida!");
 	}
 	
 	@PostMapping(path = "/generic/{nameTable}")
 	public <T> ResponseEntity<String> postTable(@PathVariable String nameTable){
-		return ResponseEntity.ok("Post " + nameTable + " method http!");
+		return ResponseEntity.ok("Http Post: " + nameTable + " method http!");
 	}
 	
 	@DeleteMapping(path = "/generic/{nameTable}") 
 	public ResponseEntity<String> deleteTable(@PathVariable String nameTable){
-		return ResponseEntity.ok("Borrado "+ nameTable + " con exito!");
+		return ResponseEntity.ok("Http Delete: "+ nameTable + " con exito!");
 	}
 }
