@@ -24,14 +24,10 @@ spring:
     password: 
     driverClassName: org.h2.Driver
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     #defer-datasource-initialization: true
     show-sql: true
     hibernate:
       ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
 
 server:
   port: 8013

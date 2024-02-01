@@ -1,7 +1,7 @@
 /**
  * 
  */
-package sierra117.controller;
+package sierra.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GenericController {
 
 	@GetMapping(path = "/generic/{nameTable}")
-	public <T> ResponseEntity<String> getTable(@PathVariable String nameTable){
+	public <T> ResponseEntity<String> getTable(@PathVariable String nameTable){		
 		return ResponseEntity.ok("Http Get: " + nameTable + " obtenida!");
 	}
 	
