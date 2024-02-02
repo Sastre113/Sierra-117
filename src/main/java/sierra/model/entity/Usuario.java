@@ -27,8 +27,8 @@ public class Usuario implements Serializable{
 	@Column(name = "fecha_nacimiento")
 	private Instant fechaNacimiento;
 
-	//@OneToMany(mappedBy = "usuario")
-	//private Set<UsuarioRol> roles;
+	@OneToMany(mappedBy = "usuario")
+	private Set<UsuarioRol> roles;
 
 	public String getNif() {
 		return nif;
@@ -69,7 +69,7 @@ public class Usuario implements Serializable{
 	public void setFechaNacimiento(Instant fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-/*
+
 	public Set<UsuarioRol> getRoles() {
 		return roles;
 	}
@@ -77,5 +77,5 @@ public class Usuario implements Serializable{
 	public void setRoles(Set<UsuarioRol> roles) {
 		this.roles = roles;
 	}
-	*/
+
 }

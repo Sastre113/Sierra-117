@@ -6,8 +6,8 @@ package sierra.model.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.ManyToOne;
 
 /**
  * @author Miguel Á. Sastre <sastre113@gmail.com>
@@ -19,11 +19,11 @@ public class UsuarioRolPK implements Serializable {
 
 	private static final long serialVersionUID = 6692765346048419723L;
 
-	@ManyToOne
+	@Column(name = "nif")
 	private String nif;
 
-	@ManyToOne
-	private Rol rol;
+	@Column(name = "id_rol")
+	private String idRol;
 
 	public String getNif() {
 		return nif;
@@ -33,28 +33,28 @@ public class UsuarioRolPK implements Serializable {
 		this.nif = nif;
 	}
 
-	public Rol getRol() {
-		return rol;
+	public String getIdRol() {
+		return idRol;
 	}
 
-	public void setRol(Rol rol) {
-		this.rol = rol;
+	public void setIdRol(String idRol) {
+		this.idRol = idRol;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(nif, rol);
+		return Objects.hash(idRol, nif);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (!(obj instanceof UsuarioRolPK)) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		UsuarioRolPK other = (UsuarioRolPK) obj;
-		return Objects.equals(nif, other.nif) && Objects.equals(rol, other.rol);
-	}
+		return Objects.equals(idRol, other.idRol) && Objects.equals(nif, other.nif);
+	}	
 }
