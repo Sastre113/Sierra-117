@@ -33,7 +33,7 @@ public class HistoricoService implements IHistoricoService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
-	public <T,K> void registrarCambios(Serializable entityConCambios, K id) {
+	public <T, K> void registrarCambios(Serializable entityConCambios, K id) {
 		Serializable entityOriginal = this.entityManager.find(entityConCambios.getClass(), id);
 
 		String nombreTabla = this.obtenerNombreTabla(entityConCambios.getClass());
@@ -41,7 +41,7 @@ public class HistoricoService implements IHistoricoService {
 
 		Method[] methods = entityOriginal.getClass().getDeclaredMethods();
 		for (Method method : methods) {
-			if (method.getName().contains("get")) {	
+			if (method.getName().contains("get")) {
 				T valorEntityOriginal = this.invocarGet(method, entityOriginal);
 				T valorEntityConCambios = this.invocarGet(method, entityConCambios);
 
@@ -55,7 +55,7 @@ public class HistoricoService implements IHistoricoService {
 					historicoEntity.setValorAnterior(valorEntityOriginal != null ? valorEntityOriginal.toString() : null);
 					historicoEntity.setValorPosterior(valorEntityConCambios != null ? valorEntityConCambios.toString() : null);
 					historicoEntity.setFechaCambio(Instant.now());
-
+	
 					this.historicoRepository.saveAndFlush(historicoEntity);
 				}
 			}
@@ -101,7 +101,7 @@ public class HistoricoService implements IHistoricoService {
 
 		return null;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private <T> T invocarGet(Method method, Serializable entity) {
 		try {

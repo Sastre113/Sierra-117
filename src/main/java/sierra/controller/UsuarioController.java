@@ -40,7 +40,7 @@ public class UsuarioController {
 	public ResponseEntity<UsuarioDTO> modificarUsuario(@RequestBody PeticionModificarUsuarioDTO peticionDTO) {
 		return ResponseEntity.ok().body(this.usuarioService.modificarUsuario(peticionDTO));
 	}
-	
+	  
 	@GetMapping("/usuarios")
 	public ResponseEntity<List<UsuarioDTO>> listarUsuarios() {
 		return ResponseEntity.ok().body(this.usuarioService.listarUsuarios());
