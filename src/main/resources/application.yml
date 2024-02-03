@@ -3,7 +3,11 @@ logging:
     org:
       springframework:
         security: DEBUG
-        
+server:
+  port: 8013
+  servlet:
+    context-path: /sierra
+            
 spring:
   web:
     locale: ca_ES
@@ -29,6 +33,4 @@ spring:
     hibernate:
       ddl-auto: update
 
-server:
-  port: 8013
  
