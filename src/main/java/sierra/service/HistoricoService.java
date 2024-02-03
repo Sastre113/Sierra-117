@@ -33,7 +33,7 @@ public class HistoricoService implements IHistoricoService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
-	public <T> void registrarCambios(Serializable entityConCambios, String id) {
+	public <T,K> void registrarCambios(Serializable entityConCambios, K id) {
 		Serializable entityOriginal = this.entityManager.find(entityConCambios.getClass(), id);
 
 		String nombreTabla = this.obtenerNombreTabla(entityConCambios.getClass());
@@ -48,7 +48,7 @@ public class HistoricoService implements IHistoricoService {
 				if (this.hayCambios(valorEntityOriginal, valorEntityConCambios)) {
 					HistoricoCambios historicoEntity = new HistoricoCambios();
 					historicoEntity.setIdHistorico(UUID.randomUUID().toString());
-					historicoEntity.setId(id);
+					historicoEntity.setId(id.toString());
 					historicoEntity.setNombreTabla(nombreTabla);
 					historicoEntity.setNombreEntidad(nombreEntidad);
 					historicoEntity.setColumna(this.obtenerNombreColumna(method.getName()));
