@@ -8,7 +8,7 @@ import java.time.Instant;
 /**
  * 
  */
-public class PeticionCrearUsuarioDTO {
+public class PeticionModificarUsuarioDTO {
 
 	private String nif;
 	private String nombre;
@@ -55,5 +55,4 @@ public class PeticionCrearUsuarioDTO {
 	public void setFechaNacimiento(Instant fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-
 }

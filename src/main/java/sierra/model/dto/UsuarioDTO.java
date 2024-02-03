@@ -10,6 +10,7 @@ public class UsuarioDTO {
 	private String nif;
 	private String nombre;
 	private String primerApellido;
+	private String segundoApellido;
 	private Instant fechaNacimiento;
 
 	public String getNif() {
@@ -34,6 +35,14 @@ public class UsuarioDTO {
 
 	public void setPrimerApellido(String primerApellido) {
 		this.primerApellido = primerApellido;
+	}
+
+	public String getSegundoApellido() {
+		return this.segundoApellido;
+	}
+
+	public void setSegundoApellido(String segundoApellido) {
+		this.segundoApellido = segundoApellido;
 	}
 
 	public Instant getFechaNacimiento() {

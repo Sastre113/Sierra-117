@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import sierra.model.dto.PeticionCrearUsuarioDTO;
+import sierra.model.dto.PeticionModificarUsuarioDTO;
 import sierra.model.dto.UsuarioDTO;
 import sierra.model.entity.Usuario;
 import sierra.repository.IUsuarioRepository;
@@ -18,10 +20,11 @@ import sierra.repository.IUsuarioRepository;
 public class UsuarioService implements IUsuarioService {
 
 	private final IUsuarioRepository usuarioRepository;
+	private final IHistoricoService historicoService;
 
-    public UsuarioService(IUsuarioRepository usuarioRepository) {
-        // Haciendo un cast al tipo específico
+    public UsuarioService(IUsuarioRepository usuarioRepository, IHistoricoService historicoService) {
         this.usuarioRepository = usuarioRepository;
+        this.historicoService = historicoService;
     }
 
 	@Override
@@ -30,9 +33,32 @@ public class UsuarioService implements IUsuarioService {
 	}
 
 	@Override
+	@Transactional
 	public UsuarioDTO crearUsuario(PeticionCrearUsuarioDTO peticionDTO) {
-		// TODO Auto-generated method stub
-		return null;
+		Usuario usuarioEntity = new Usuario();
+		usuarioEntity.setNif(peticionDTO.getNif());
+		usuarioEntity.setNombre(peticionDTO.getNombre()); 
+		usuarioEntity.setPrimerApellido(peticionDTO.getPrimerApellido()); 
+		usuarioEntity.setSegundoApellido(peticionDTO.getSegundoApellido()); 
+		usuarioEntity.setFechaNacimiento(peticionDTO.getFechaNacimiento());
+		
+		this.usuarioRepository.saveAndFlush(usuarioEntity);
+		return this.mapUsuarioDTO(usuarioEntity);
+	}
+
+	@Override
+	@Transactional
+	public UsuarioDTO modificarUsuario(PeticionModificarUsuarioDTO peticionDTO) {
+		Usuario usuarioEntity = this.usuarioRepository.findById(peticionDTO.getNif()).orElseThrow();
+		
+		usuarioEntity.setNombre(peticionDTO.getNombre());
+		usuarioEntity.setPrimerApellido(peticionDTO.getPrimerApellido());
+		usuarioEntity.setSegundoApellido(peticionDTO.getSegundoApellido());
+		usuarioEntity.setFechaNacimiento(peticionDTO.getFechaNacimiento());
+		
+		this.historicoService.registrarCambios(usuarioEntity, usuarioEntity.getNif());
+		this.usuarioRepository.save(usuarioEntity);
+		return this.mapUsuarioDTO(usuarioEntity);
 	}
 
 	@Override
@@ -44,8 +70,9 @@ public class UsuarioService implements IUsuarioService {
 
 	@Override
 	public UsuarioDTO eliminarUsuario(String idUsuario) {
-		// TODO Auto-generated method stub
-		return null;
+		Usuario usuarioEntity = this.usuarioRepository.findById(idUsuario).orElseThrow();
+		this.usuarioRepository.deleteById(idUsuario);
+		return this.mapUsuarioDTO(usuarioEntity);
 	}
 	
 	private UsuarioDTO mapUsuarioDTO(Usuario usuarioEntity) {
@@ -54,6 +81,7 @@ public class UsuarioService implements IUsuarioService {
 		usuarioDTO.setNif(usuarioEntity.getNif());
 		usuarioDTO.setNombre(usuarioEntity.getNombre());
 		usuarioDTO.setPrimerApellido(usuarioEntity.getPrimerApellido());
+		usuarioDTO.setSegundoApellido(usuarioEntity.getSegundoApellido());
 		usuarioDTO.setFechaNacimiento(usuarioEntity.getFechaNacimiento());
 
 		return usuarioDTO;

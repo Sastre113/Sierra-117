@@ -1,9 +1,9 @@
-CREATE TABLE Usuarios (
+CREATE TABLE UsuariosTb (
     nif VARCHAR(20) PRIMARY KEY,
     nombre VARCHAR(100),
     primer_apellido VARCHAR(100),
     segundo_apellido VARCHAR(100),
-    fecha_nacimiento DATE
+    fecha_nacimiento TIMESTAMP
 );
 
 CREATE TABLE Roles (
@@ -22,7 +22,7 @@ CREATE TABLE Usuarios_Roles (
     nif VARCHAR(20),
     id_rol VARCHAR(36),
     PRIMARY KEY (nif, id_rol),
-    FOREIGN KEY (nif) REFERENCES Usuarios(nif),
+    FOREIGN KEY (nif) REFERENCES UsuariosTb(nif),
     FOREIGN KEY (id_rol) REFERENCES Roles(id_rol)
 );
 
@@ -35,8 +35,19 @@ CREATE TABLE Roles_Permisos (
     FOREIGN KEY (id_permiso) REFERENCES Permisos(id_permiso)
 );
 
+CREATE TABLE Historico_cambios (
+    id_historico VARCHAR(36) PRIMARY KEY,
+    id VARCHAR(100),
+    nombre_tabla VARCHAR(100),
+    nombre_entidad VARCHAR(100),
+    columna VARCHAR(100),
+    valor_anterior VARCHAR(100),
+    valor_posterior VARCHAR(100),
+    fecha_cambio TIMESTAMP
+);
+
 -- Insertar datos en Usuarios
-INSERT INTO Usuarios (nif, nombre, primer_apellido, segundo_apellido, fecha_nacimiento)
+INSERT INTO UsuariosTb (nif, nombre, primer_apellido, segundo_apellido, fecha_nacimiento)
 VALUES
     ('12345678A', 'Gordon', 'Freeman', '', '1980-07-05'),
     ('87654321B', 'Alyx', 'Vance', '', '1988-02-20'),
@@ -72,7 +83,7 @@ VALUES
     ('3', '001');
     
 -- Insertar más datos en Usuarios
-INSERT INTO Usuarios (nif, nombre, primer_apellido, segundo_apellido, fecha_nacimiento)
+INSERT INTO UsuariosTb (nif, nombre, primer_apellido, segundo_apellido, fecha_nacimiento)
 VALUES
     ('23456789D', 'Isaac', 'Kleiner', '', '1958-03-07'),
     ('34567890E', 'Eli', 'Vance', '', '1955-12-15'),
