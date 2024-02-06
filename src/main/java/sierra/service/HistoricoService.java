@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.time.Instant;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -26,7 +27,7 @@ public class HistoricoService implements IHistoricoService {
 	private EntityManager entityManager;
 	private IHistoricoRepository historicoRepository;
 
-	public HistoricoService(EntityManager entityManager, IHistoricoRepository historicoRepository) {
+	public HistoricoService(EntityManager entityManager, @Qualifier("loggerDb") IHistoricoRepository historicoRepository) {
 		this.entityManager = entityManager;
 		this.historicoRepository = historicoRepository;
 	}

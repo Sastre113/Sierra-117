@@ -1,3 +1,6 @@
+CREATE SCHEMA IF NOT EXISTS MainSchema;
+SET SCHEMA MainSchema;
+
 CREATE TABLE UsuariosTb (
     nif VARCHAR(20) PRIMARY KEY,
     nombre VARCHAR(100),
@@ -33,17 +36,6 @@ CREATE TABLE Roles_Permisos (
     PRIMARY KEY (id_rol, id_permiso),
     FOREIGN KEY (id_rol) REFERENCES Roles(id_rol),
     FOREIGN KEY (id_permiso) REFERENCES Permisos(id_permiso)
-);
-
-CREATE TABLE Historico_cambios (
-    id_historico VARCHAR(36) PRIMARY KEY,
-    id VARCHAR(100),
-    nombre_tabla VARCHAR(100),
-    nombre_entidad VARCHAR(100),
-    columna VARCHAR(100),
-    valor_anterior VARCHAR(100),
-    valor_posterior VARCHAR(100),
-    fecha_cambio TIMESTAMP
 );
 
 -- Insertar datos en Usuarios

@@ -7,8 +7,11 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.support.SharedEntityManagerBean;
@@ -20,6 +23,7 @@ import jakarta.persistence.EntityManagerFactory;
 public class JpaConfig {
 
 	@Bean
+	@Primary
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
 		LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactory.setDataSource(dataSource);
@@ -31,6 +35,18 @@ public class JpaConfig {
 
 		return entityManagerFactory;
 	}
+	
+	@Bean(name = "loggerDbEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean loggerDbEntityManagerFactory(
+            EntityManagerFactoryBuilder builder,
+            @Qualifier("loggerDb") DataSource dataSource) {
+        return builder
+                .dataSource(dataSource)
+                .packages("sierra.model.entity")
+                .persistenceUnit("loggerDb")
+                .build();
+    }
+	
 
 	@Bean
 	public SharedEntityManagerBean entityManager(EntityManagerFactory entityManagerFactory) {
