@@ -45,7 +45,7 @@ public class HistoricoService implements IHistoricoService {
 			if (method.getName().contains("get")) {
 				T valorEntityOriginal = this.invocarGet(method, entityOriginal);
 				T valorEntityConCambios = this.invocarGet(method, entityConCambios);
-
+			
 				if (this.hayCambios(valorEntityOriginal, valorEntityConCambios)) {
 					HistoricoCambios historicoEntity = new HistoricoCambios();
 					historicoEntity.setIdHistorico(UUID.randomUUID().toString());
