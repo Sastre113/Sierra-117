@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -93,6 +94,12 @@ public class HistoricoService implements IHistoricoService {
 				}
 			}
 		}*/
+	}
+	
+
+	@Override
+	public List<HistoricoCambios> getHistorico() {
+		return this.historicoRepository.findAll();
 	}
 	
 	@Deprecated(forRemoval = true)

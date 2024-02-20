@@ -17,7 +17,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 public class DataBase {
 	
 
-	//@Bean(name = "mainDb")
+	@Bean(name = "mainDb")
 	@Primary
 	public EmbeddedDatabase dataSourceMainDb() {
 		return new EmbeddedDatabaseBuilder()
