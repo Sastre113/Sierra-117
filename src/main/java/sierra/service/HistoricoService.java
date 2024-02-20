@@ -11,7 +11,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -70,57 +69,12 @@ public class HistoricoService implements IHistoricoService {
 			}
 
 		}
-		
-		
-		/** TODO @Deprecated
-		Method[] methods = entityOriginal.getClass().getDeclaredMethods();
-		for (Method method : methods) {
-			if (method.getName().contains("get")) {
-				T valorEntityOriginal = this.invocarGet(method, entityOriginal);
-				T valorEntityConCambios = this.invocarGet(method, entityConCambios);
-			
-				if (this.hayCambios(valorEntityOriginal, valorEntityConCambios)) {
-					HistoricoCambios historicoEntity = new HistoricoCambios();
-					historicoEntity.setIdHistorico(UUID.randomUUID().toString());
-					historicoEntity.setId(id.toString());
-					historicoEntity.setNombreTabla(nombreTabla);
-					historicoEntity.setNombreEntidad(nombreEntidad);
-					historicoEntity.setColumna(this.obtenerNombreColumna(method.getName()));
-					historicoEntity.setValorAnterior(valorEntityOriginal != null ? valorEntityOriginal.toString() : null);
-					historicoEntity.setValorPosterior(valorEntityConCambios != null ? valorEntityConCambios.toString() : null);
-					historicoEntity.setFechaCambio(Instant.now());
-	
-					this.historicoRepository.saveAndFlush(historicoEntity);
-				}
-			}
-		}*/
 	}
 	
 
 	@Override
 	public List<HistoricoCambios> getHistorico() {
 		return this.historicoRepository.findAll();
-	}
-	
-	@Deprecated(forRemoval = true)
-	private String obtenerNombreColumna(String methodName) {
-		String nombreSinGet = methodName.replaceFirst("^get", "").substring(0, 1).toLowerCase()
-				+ methodName.substring(4);
-		boolean capitalizar = true;
-
-		StringBuilder resultado = new StringBuilder();
-		for (char letra : nombreSinGet.toCharArray()) {
-			if (capitalizar && Character.isLetter(letra)) {
-				resultado.append(Character.toUpperCase(letra));
-				capitalizar = false;
-			} else if (Character.isUpperCase(letra)) {
-				resultado.append(" ").append(letra);
-			} else {
-				resultado.append(letra);
-			}
-		}
-
-		return resultado.toString().trim();
 	}
 
 	private <T> boolean hayCambios(T valorEntityOriginal, T valorEntityConCambios) {
