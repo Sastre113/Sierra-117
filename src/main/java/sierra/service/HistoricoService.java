@@ -4,6 +4,7 @@
 package sierra.service;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.Instant;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Table;
@@ -27,7 +29,7 @@ public class HistoricoService implements IHistoricoService {
 	private EntityManager entityManager;
 	private IHistoricoRepository historicoRepository;
 
-	public HistoricoService(EntityManager entityManager, @Qualifier("loggerDb") IHistoricoRepository historicoRepository) {
+	public HistoricoService(EntityManager entityManager, IHistoricoRepository historicoRepository) {
 		this.entityManager = entityManager;
 		this.historicoRepository = historicoRepository;
 	}
@@ -39,7 +41,37 @@ public class HistoricoService implements IHistoricoService {
 
 		String nombreTabla = this.obtenerNombreTabla(entityConCambios.getClass());
 		String nombreEntidad = entityConCambios.getClass().getSimpleName();
+		
+		Field[] fields = entityOriginal.getClass().getDeclaredFields();
+		
+		for(Field field : fields) {
+			Method getter = this.getMethodGetter(entityOriginal.getClass(), field.getName());
+			
+			if (getter != null) {
+				T valorEntityOriginal = this.invocarGet(getter, entityOriginal);
+				T valorEntityConCambios = this.invocarGet(getter, entityConCambios);
 
+				if (this.hayCambios(valorEntityOriginal, valorEntityConCambios)) {
+					HistoricoCambios historicoEntity = new HistoricoCambios();
+					historicoEntity.setIdHistorico(UUID.randomUUID().toString());
+					historicoEntity.setId(id.toString());
+					historicoEntity.setNombreTabla(nombreTabla);
+					historicoEntity.setNombreEntidad(nombreEntidad);
+					historicoEntity.setColumna(field.getDeclaredAnnotation(Column.class).name());
+					historicoEntity
+							.setValorAnterior(valorEntityOriginal != null ? valorEntityOriginal.toString() : null);
+					historicoEntity
+							.setValorPosterior(valorEntityConCambios != null ? valorEntityConCambios.toString() : null);
+					historicoEntity.setFechaCambio(Instant.now());
+
+					this.historicoRepository.saveAndFlush(historicoEntity);
+				}
+			}
+
+		}
+		
+		
+		/** TODO @Deprecated
 		Method[] methods = entityOriginal.getClass().getDeclaredMethods();
 		for (Method method : methods) {
 			if (method.getName().contains("get")) {
@@ -60,9 +92,10 @@ public class HistoricoService implements IHistoricoService {
 					this.historicoRepository.saveAndFlush(historicoEntity);
 				}
 			}
-		}
+		}*/
 	}
-
+	
+	@Deprecated(forRemoval = true)
 	private String obtenerNombreColumna(String methodName) {
 		String nombreSinGet = methodName.replaceFirst("^get", "").substring(0, 1).toLowerCase()
 				+ methodName.substring(4);
@@ -110,6 +143,16 @@ public class HistoricoService implements IHistoricoService {
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 			throw new RuntimeException();
+		}
+	}
+	
+	private Method getMethodGetter(Class<? extends Serializable> clazz, String nameMethod) {
+		String getterName = "get" + nameMethod.substring(0,1).toUpperCase() + nameMethod.substring(1);
+		try {
+			return clazz.getDeclaredMethod(getterName);
+		} catch (NoSuchMethodException | SecurityException e) {
+			System.out.println("No existe el método " + nameMethod);
+			return null;
 		}
 	}
 }

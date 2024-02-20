@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Historico_cambios")
+@Table(name = "HistoricoCambios")
 public class HistoricoCambios implements Serializable {
 
 	private static final long serialVersionUID = -1875917360731351013L;

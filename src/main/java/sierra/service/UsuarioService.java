@@ -18,7 +18,7 @@ import sierra.repository.IUsuarioRepository;
 
 @Service
 public class UsuarioService implements IUsuarioService {
-
+	
 	private final IUsuarioRepository usuarioRepository;
 	private final IHistoricoService historicoService;
 

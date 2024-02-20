@@ -3,6 +3,8 @@
  */
 package sierra.config;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -35,18 +37,16 @@ public class JpaConfig {
 
 		return entityManagerFactory;
 	}
-	
+	/*
 	@Bean(name = "loggerDbEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean loggerDbEntityManagerFactory(
-            EntityManagerFactoryBuilder builder,
-            @Qualifier("loggerDb") DataSource dataSource) {
-        return builder
-                .dataSource(dataSource)
-                .packages("sierra.model.entity")
-                .persistenceUnit("loggerDb")
-                .build();
-    }
-	
+	public LocalContainerEntityManagerFactoryBean loggerDbEntityManagerFactory(EntityManagerFactoryBuilder builder,
+			@Qualifier("loggerDb") DataSource dataSource) {
+		Map<String, String> properties = new HashMap<>();
+		properties.put("hibernate.default_schema", "loggerDb");
+
+		return builder.dataSource(dataSource).packages("sierra.model.entity").persistenceUnit("loggerDb")
+				.properties(properties).build();
+	}*/
 
 	@Bean
 	public SharedEntityManagerBean entityManager(EntityManagerFactory entityManagerFactory) {
@@ -59,6 +59,8 @@ public class JpaConfig {
 		Properties properties = new Properties();
 		properties.setProperty("spring.jpa.properties.hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 		properties.setProperty("spring.jpa.properties.hibernate.jdbc.time_zone", "UTC");
+		properties.setProperty("spring.h2.console.enabled", "true");
+		properties.setProperty("spring.h2.console.path", "/h2");
 
 		return properties;
 	}

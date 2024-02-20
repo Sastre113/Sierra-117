@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import sierra.model.entity.HistoricoCambios;
 
 @Repository
-@Qualifier("loggerDb")
+//@Qualifier("loggerDb")
 public interface IHistoricoRepository extends JpaRepository<HistoricoCambios, String> {
 
 }

@@ -11,7 +11,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(schema = "MainSchema", name = "UsuariosTb")
+@Table(name = "UsuariosTb")
 public class Usuario implements Serializable{
 
 	private static final long serialVersionUID = 1L;

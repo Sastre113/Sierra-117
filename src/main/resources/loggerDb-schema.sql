@@ -1,4 +1,8 @@
-CREATE TABLE Historico_cambios (
+CREATE SCHEMA IF NOT EXISTS loggerDb;
+SET SCHEMA loggerDb;
+
+/*
+CREATE TABLE HistoricoCambios (
     id_historico VARCHAR(36) PRIMARY KEY,
     id VARCHAR(100),
     nombre_tabla VARCHAR(100),
@@ -8,4 +12,5 @@ CREATE TABLE Historico_cambios (
     valor_posterior VARCHAR(100),
     fecha_cambio TIMESTAMP
 );
+*/
 

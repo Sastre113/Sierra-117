@@ -17,16 +17,24 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 public class DataBase {
 	
 
-	@Bean(name = "mainDb")
+	//@Bean(name = "mainDb")
 	@Primary
-	public EmbeddedDatabase dataSource1() {
-		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).setName("mainDb").addScript("mainDb-schema.sql").build();
+	public EmbeddedDatabase dataSourceMainDb() {
+		return new EmbeddedDatabaseBuilder()
+				.setType(EmbeddedDatabaseType.H2)
+				.setName("mainDb")
+				.addScript("mainDb-schema.sql")
+				.build();
 
 	}
 
-	@Bean(name = "loggerDb")
-	public EmbeddedDatabase dataSource2() {
-		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).setName("loggerDb").addScript("loggerDb-schema.sql").build();
+	//@Bean(name = "loggerDb")
+	public EmbeddedDatabase dataSourceLoggerDb() {
+		return new EmbeddedDatabaseBuilder()
+				.setType(EmbeddedDatabaseType.H2)
+				.setName("loggerDb")
+				.addScript("loggerDb-schema.sql")
+				.build();
 
 	}
 }
