@@ -11,6 +11,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
 
 import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
@@ -84,7 +85,7 @@ public class HistoricoService implements IHistoricoService {
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
-	public <T, K>  void registrarCambiosV2(Serializable entityConCambios) {
+	public <T, K, R>  void registrarCambiosV2(Serializable entityConCambios, Function<T, R> mapHistoricFunction) {
 		K id = this.getId(entityConCambios);
 		Serializable entityOriginal = this.entityManager.find(entityConCambios.getClass(), id);
 
