@@ -13,6 +13,7 @@ import sierra.model.dto.PeticionCrearUsuarioDTO;
 import sierra.model.dto.PeticionModificarUsuarioDTO;
 import sierra.model.dto.UsuarioDTO;
 import sierra.model.entity.Usuario;
+import sierra.repository.IHistoricoRepository;
 import sierra.repository.IUsuarioRepository;
 
 
@@ -56,7 +57,8 @@ public class UsuarioService implements IUsuarioService {
 		usuarioEntity.setSegundoApellido(peticionDTO.getSegundoApellido());
 		usuarioEntity.setFechaNacimiento(peticionDTO.getFechaNacimiento());
 		
-		this.historicoService.registrarCambios(usuarioEntity, usuarioEntity.getNif());
+		//this.historicoService.registrarCambiosV1(usuarioEntity, usuarioEntity.getNif());
+		this.historicoService.registrarCambiosV2(usuarioEntity);
 		this.usuarioRepository.save(usuarioEntity);
 		return this.mapUsuarioDTO(usuarioEntity);
 	}
