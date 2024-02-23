@@ -9,11 +9,12 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import sierra.model.dto.Historificable;
 import sierra.model.dto.PeticionCrearUsuarioDTO;
 import sierra.model.dto.PeticionModificarUsuarioDTO;
 import sierra.model.dto.UsuarioDTO;
+import sierra.model.entity.HistoricoCambios;
 import sierra.model.entity.Usuario;
-import sierra.repository.IHistoricoRepository;
 import sierra.repository.IUsuarioRepository;
 
 
@@ -58,7 +59,8 @@ public class UsuarioService implements IUsuarioService {
 		usuarioEntity.setFechaNacimiento(peticionDTO.getFechaNacimiento());
 		
 		//this.historicoService.registrarCambiosV1(usuarioEntity, usuarioEntity.getNif());
-		this.historicoService.registrarCambiosV2(usuarioEntity);
+		//this.historicoService.registrarCambiosV2(usuarioEntity);
+		this.historicoService.registrarCambiosV3(usuarioEntity, this::mapHistoricoCambiosEntity);
 		this.usuarioRepository.save(usuarioEntity);
 		return this.mapUsuarioDTO(usuarioEntity);
 	}
@@ -88,5 +90,19 @@ public class UsuarioService implements IUsuarioService {
 
 		return usuarioDTO;
 	}
-
+	
+	private HistoricoCambios mapHistoricoCambiosEntity(Historificable historificable) {
+		HistoricoCambios entity = new HistoricoCambios();
+		
+		entity.setIdHistorico(historificable.getIdHistorico());
+		entity.setId(historificable.getId());
+		entity.setColumna(historificable.getColumna());
+		entity.setNombreEntidad(historificable.getNombreEntidad());
+		entity.setNombreTabla(historificable.getNombreTabla());
+		entity.setValorAnterior(historificable.getValorAnterior());
+		entity.setValorPosterior(historificable.getValorPosterior());
+		entity.setFechaCambio(historificable.getFechaCambio());
+		
+		return entity;
+	}
 }

@@ -13,8 +13,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 
-import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import javax.management.RuntimeErrorException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,6 +25,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import sierra.model.dto.Historificable;
 import sierra.model.entity.HistoricoCambios;
 import sierra.repository.IHistoricoRepository;
 
@@ -85,7 +86,7 @@ public class HistoricoService implements IHistoricoService {
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
-	public <T, K, R>  void registrarCambiosV2(Serializable entityConCambios, Function<T, R> mapHistoricFunction) {
+	public <T, K>  void registrarCambiosV2(Serializable entityConCambios) {
 		K id = this.getId(entityConCambios);
 		Serializable entityOriginal = this.entityManager.find(entityConCambios.getClass(), id);
 
@@ -114,7 +115,54 @@ public class HistoricoService implements IHistoricoService {
 					
 					this.entityManager.persist(historicoEntity);
 					this.entityManager.flush();
-					//this.historicoRepository.saveAndFlush(historicoEntity);
+				}
+			}
+
+		}
+	}
+	
+	/**
+	 * @version v3
+	 * @param entityConCambios
+	 */
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
+	public <V, ID, R extends Serializable>  void registrarCambiosV3(Serializable entityConCambios, Function<Historificable, R> mapHistoricFunction) {
+		ID id = this.getId(entityConCambios);
+		Serializable entityOriginal = this.entityManager.find(entityConCambios.getClass(), id);
+
+		String nombreTabla = this.obtenerNombreTabla(entityConCambios.getClass());
+		String nombreEntidad = entityConCambios.getClass().getSimpleName();
+		
+		Field[] fields = entityOriginal.getClass().getDeclaredFields();
+		
+		for(Field field : fields) {
+			Optional<Method> optMethodGetter = this.getMethodGetter(entityOriginal.getClass(), field.getName());
+			
+			if (optMethodGetter.isPresent()) {
+				V valorEntityOriginal = this.invocarGet(optMethodGetter.get(), entityOriginal);
+				V valorEntityConCambios = this.invocarGet(optMethodGetter.get(), entityConCambios);
+
+				if (this.hayCambios(valorEntityOriginal, valorEntityConCambios)) {
+
+					Historificable historificable = new Historificable();
+					historificable.setIdHistorico(UUID.randomUUID().toString());
+					historificable.setId(id.toString());
+					historificable.setNombreTabla(nombreTabla);
+					historificable.setNombreEntidad(nombreEntidad);
+					historificable.setColumna(field.getDeclaredAnnotation(Column.class).name());
+					historificable.setValorAnterior(valorEntityOriginal != null ? valorEntityOriginal.toString() : null);
+					historificable.setValorPosterior(valorEntityConCambios != null ? valorEntityConCambios.toString() : null);
+					historificable.setFechaCambio(Instant.now());
+					
+					R entity = mapHistoricFunction.apply(historificable);
+					
+					if(entity.getClass().getDeclaredAnnotation(Entity.class) == null) {
+						throw new RuntimeException("La clase no esta marcada como @Entity");
+					}
+					
+					this.entityManager.persist(entity);
+					this.entityManager.flush();
 				}
 			}
 
