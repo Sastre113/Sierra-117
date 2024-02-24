@@ -133,7 +133,6 @@ public class HistoricoService implements IHistoricoService {
 
 		String nombreTabla = this.obtenerNombreTabla(entityConCambios.getClass());
 		String nombreEntidad = entityConCambios.getClass().getSimpleName();
-		
 		Field[] fields = entityOriginal.getClass().getDeclaredFields();
 		
 		for(Field field : fields) {
