@@ -8,12 +8,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
-
-import javax.management.RuntimeErrorException;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -60,7 +59,11 @@ public class HistoricoService implements IHistoricoService {
 				T valorEntityOriginal = this.invocarGet(optMethodGetter.get(), entityOriginal);
 				T valorEntityConCambios = this.invocarGet(optMethodGetter.get(), entityConCambios);
 
-				if (this.hayCambios(valorEntityOriginal, valorEntityConCambios)) {
+				if (!Collection.class.isAssignableFrom(field.getType()) && this.hayCambios(valorEntityOriginal, valorEntityConCambios)) {
+
+					if(field.getDeclaredAnnotation(Column.class) == null) {
+						throw new RuntimeException("`" + field.getName() + "` no esta marcado como @Column");
+					}
 					HistoricoCambios historicoEntity = new HistoricoCambios();
 					historicoEntity.setIdHistorico(UUID.randomUUID().toString());
 					historicoEntity.setId(id.toString());
@@ -102,7 +105,12 @@ public class HistoricoService implements IHistoricoService {
 				T valorEntityOriginal = this.invocarGet(optMethodGetter.get(), entityOriginal);
 				T valorEntityConCambios = this.invocarGet(optMethodGetter.get(), entityConCambios);
 
-				if (this.hayCambios(valorEntityOriginal, valorEntityConCambios)) {
+				if (!Collection.class.isAssignableFrom(field.getType()) && this.hayCambios(valorEntityOriginal, valorEntityConCambios)) {
+
+					if(field.getDeclaredAnnotation(Column.class) == null) {
+						throw new RuntimeException("`" + field.getName() + "` no esta marcado como @Column");
+					}
+					
 					HistoricoCambios historicoEntity = new HistoricoCambios();
 					historicoEntity.setIdHistorico(UUID.randomUUID().toString());
 					historicoEntity.setId(id.toString());
@@ -141,9 +149,14 @@ public class HistoricoService implements IHistoricoService {
 			if (optMethodGetter.isPresent()) {
 				V valorEntityOriginal = this.invocarGet(optMethodGetter.get(), entityOriginal);
 				V valorEntityConCambios = this.invocarGet(optMethodGetter.get(), entityConCambios);
+				
+				
+				if (!Collection.class.isAssignableFrom(field.getType()) && this.hayCambios(valorEntityOriginal, valorEntityConCambios)) {
 
-				if (this.hayCambios(valorEntityOriginal, valorEntityConCambios)) {
-
+					if(field.getDeclaredAnnotation(Column.class) == null) {
+						throw new RuntimeException("`" + field.getName() + "` no esta marcado como @Column");
+					}
+					
 					Historificable historificable = new Historificable();
 					historificable.setIdHistorico(UUID.randomUUID().toString());
 					historificable.setId(id.toString());
