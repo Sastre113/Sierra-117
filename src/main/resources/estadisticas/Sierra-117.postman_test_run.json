@@ -1,0 +1,404 @@
+{
+	"id": "854786b3-6754-4aa0-a26d-e97c552aea83",
+	"name": "Sierra-117",
+	"timestamp": "2024-02-26T23:35:59.050Z",
+	"collection_id": "13466032-064586ca-52b8-4834-834b-0ebf9bdbd724",
+	"folder_id": "13466032-95d01653-7f8d-4446-b55d-0ac835cbfba8",
+	"environment_id": "13466032-a5a8e01d-a3a6-4a17-9fdc-45f4c87517c7",
+	"totalPass": 80,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2024-02-26T23:35:43.531Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "525b6b1a-8f6c-4922-9dbe-d47b5e464357",
+			"name": "Listar usuarios",
+			"url": "http://localhost:8013/sierra/usuarios",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Content-Type header is application/json": true,
+				"Each object in the array has the required fields": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Content-Type header is application/json": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Each object in the array has the required fields": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				13,
+				19,
+				12,
+				13,
+				13
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Content-Type header is application/json": true,
+					"Each object in the array has the required fields": true
+				},
+				{
+					"Response status code is 200": true,
+					"Content-Type header is application/json": true,
+					"Each object in the array has the required fields": true
+				},
+				{
+					"Response status code is 200": true,
+					"Content-Type header is application/json": true,
+					"Each object in the array has the required fields": true
+				},
+				{
+					"Response status code is 200": true,
+					"Content-Type header is application/json": true,
+					"Each object in the array has the required fields": true
+				},
+				{
+					"Response status code is 200": true,
+					"Content-Type header is application/json": true,
+					"Each object in the array has the required fields": true
+				}
+			]
+		},
+		{
+			"id": "e1c6159b-5679-42dc-9fb0-0c0a971253d1",
+			"name": "Listar cambios",
+			"url": "http://localhost:8013/sierra/historico",
+			"time": 42,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response has the required fields": true,
+				"Verify the response content type is application/json": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Verify the response content type is application/json": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				56,
+				40,
+				40,
+				42,
+				42
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true,
+					"Verify the response content type is application/json": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true,
+					"Verify the response content type is application/json": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true,
+					"Verify the response content type is application/json": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true,
+					"Verify the response content type is application/json": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true,
+					"Verify the response content type is application/json": true
+				}
+			]
+		},
+		{
+			"id": "1cfef434-2267-494b-85d9-ba3b5cc463c8",
+			"name": "Obtener Usuario por nif",
+			"url": "http://localhost:8013/sierra/usuario/31084635-C",
+			"time": 2,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response is an object with nif, nombre, primerApellido, segundoApellido, and fechaNacimiento properties": true,
+				"Response time is less than 500ms": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Response is an object with nif, nombre, primerApellido, segundoApellido, and fechaNacimiento properties": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Response time is less than 500ms": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				2,
+				2,
+				2,
+				2,
+				2
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response is an object with nif, nombre, primerApellido, segundoApellido, and fechaNacimiento properties": true,
+					"Response time is less than 500ms": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response is an object with nif, nombre, primerApellido, segundoApellido, and fechaNacimiento properties": true,
+					"Response time is less than 500ms": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response is an object with nif, nombre, primerApellido, segundoApellido, and fechaNacimiento properties": true,
+					"Response time is less than 500ms": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response is an object with nif, nombre, primerApellido, segundoApellido, and fechaNacimiento properties": true,
+					"Response time is less than 500ms": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response is an object with nif, nombre, primerApellido, segundoApellido, and fechaNacimiento properties": true,
+					"Response time is less than 500ms": true
+				}
+			]
+		},
+		{
+			"id": "7ae9f5d1-a64d-416c-8edb-88c96b595759",
+			"name": "Crear usuario",
+			"url": "http://localhost:8013/sierra/usuario",
+			"time": 2,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response has the required fields": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				2,
+				2,
+				3,
+				4,
+				2
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response has the required fields": true
+				}
+			]
+		},
+		{
+			"id": "ee95f015-cc58-4189-b234-38a8bca1729d",
+			"name": "Modificar Usuario",
+			"url": "http://localhost:8013/sierra/usuario",
+			"time": 3,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response has the required fields - nif, nombre, primerApellido, and fechaNacimiento": true,
+				"Nombre and primerApellido are non-empty strings": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Response has the required fields - nif, nombre, primerApellido, and fechaNacimiento": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Nombre and primerApellido are non-empty strings": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				8,
+				3,
+				4,
+				3,
+				3
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response has the required fields - nif, nombre, primerApellido, and fechaNacimiento": true,
+					"Nombre and primerApellido are non-empty strings": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response has the required fields - nif, nombre, primerApellido, and fechaNacimiento": true,
+					"Nombre and primerApellido are non-empty strings": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response has the required fields - nif, nombre, primerApellido, and fechaNacimiento": true,
+					"Nombre and primerApellido are non-empty strings": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response has the required fields - nif, nombre, primerApellido, and fechaNacimiento": true,
+					"Nombre and primerApellido are non-empty strings": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response has the required fields - nif, nombre, primerApellido, and fechaNacimiento": true,
+					"Nombre and primerApellido are non-empty strings": true
+				}
+			]
+		},
+		{
+			"id": "30a4c452-e971-4a2f-b42a-82101a78262d",
+			"name": "Eliminar usuario",
+			"url": "http://localhost:8013/sierra/usuario/54238163T",
+			"time": 2,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response is an object with nif, nombre, primerApellido, segundoApellido, and fechaNacimiento properties": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 5,
+					"fail": 0
+				},
+				"Response is an object with nif, nombre, primerApellido, segundoApellido, and fechaNacimiento properties": {
+					"pass": 5,
+					"fail": 0
+				}
+			},
+			"times": [
+				2,
+				2,
+				2,
+				2,
+				2
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response is an object with nif, nombre, primerApellido, segundoApellido, and fechaNacimiento properties": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response is an object with nif, nombre, primerApellido, segundoApellido, and fechaNacimiento properties": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response is an object with nif, nombre, primerApellido, segundoApellido, and fechaNacimiento properties": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response is an object with nif, nombre, primerApellido, segundoApellido, and fechaNacimiento properties": true
+				},
+				{
+					"Response status code is 200": true,
+					"Response is an object with nif, nombre, primerApellido, segundoApellido, and fechaNacimiento properties": true
+				}
+			]
+		}
+	],
+	"count": 5,
+	"totalTime": 344,
+	"collection": {
+		"requests": [
+			{
+				"id": "525b6b1a-8f6c-4922-9dbe-d47b5e464357",
+				"method": "GET"
+			},
+			{
+				"id": "e1c6159b-5679-42dc-9fb0-0c0a971253d1",
+				"method": "GET"
+			},
+			{
+				"id": "1cfef434-2267-494b-85d9-ba3b5cc463c8",
+				"method": "GET"
+			},
+			{
+				"id": "7ae9f5d1-a64d-416c-8edb-88c96b595759",
+				"method": "POST"
+			},
+			{
+				"id": "ee95f015-cc58-4189-b234-38a8bca1729d",
+				"method": "PUT"
+			},
+			{
+				"id": "30a4c452-e971-4a2f-b42a-82101a78262d",
+				"method": "DELETE"
+			}
+		]
+	}
+}

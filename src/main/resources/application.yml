@@ -47,4 +47,8 @@ spring:
   jackson:
     time-zone: UTC
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui-custom.html
+    operationsSorter: method
   

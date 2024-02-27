@@ -85,7 +85,6 @@ public class HistoricoService implements IHistoricoService {
 
 	/**
 	 * @version v2
-	 * @param entityConCambios
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
@@ -131,7 +130,6 @@ public class HistoricoService implements IHistoricoService {
 	
 	/**
 	 * @version v3
-	 * @param entityConCambios
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
